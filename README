@@ -1,0 +1,4 @@
+This README file contains information on the contents of the meta-tinker layer.
+
+Run 'bitbake-layers add-layer meta-tinker'
+
