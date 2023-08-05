@@ -1,0 +1,69 @@
+#!/bin/bash
+
+set -x
+set -e
+
+AUTOBOOT_TXT=/autoboot/autoboot.txt
+AUTOBOOT_PARTITION=$(dirname ${AUTOBOOT_TXT})
+
+BOOT_PARTITION=$(cat /proc/device-tree/chosen/bootloader/partition | hexdump -v -e '/1 "%u\n"' | tail -n1)
+
+AUTOBOOT_ALL=$(sed -nr '/\[all\]/,/\[/{/boot_partition/p}' ${AUTOBOOT_TXT} | sed 's/boot_partition=//')
+AUTOBOOT_TRYBOOT=$(sed -nr '/\[tryboot]/,/\[/{/boot_partition/p}' ${AUTOBOOT_TXT} | sed 's/boot_partition=//')
+
+get-primary () {
+    echo ${BOOT_PARTITION}
+    return 0
+}
+
+set-primary () {
+  PRIMARY_PARTITION=$2
+
+  mount -o rw,remount ${AUTOBOOT_PARTITION}
+  sed -i ":a;N;N;\$!ba;s/\[tryboot\]\n.*boot_partition=[0-9]*/[tryboot]\nboot_partition=${PRIMARY_PARTITION}/g" ${AUTOBOOT_TXT}
+  mount -o ro,remount ${AUTOBOOT_PARTITION}
+
+  (sleep 10 ; reboot "0 tryboot" ) &
+  return 0
+}
+
+get-state () {
+  BOOTNAME=$2
+
+  if [ "${AUTOBOOT_ALL}" == "${BOOTNAME}" ] ; then
+     echo good
+  else
+     echo bad
+  fi
+
+  return 0
+}
+
+set-state () {
+  BOOTNAME=$2
+  STATE=$3
+
+  if [ "$STATE" == "good" ]; then
+    #Only mark it good if we actually booted from it
+    if [ "$BOOTNAME" != "$BOOT_PARTITION" ]; then
+      exit 100
+    fi
+
+    mount -o rw,remount ${AUTOBOOT_PARTITION}
+    sed -i ":a;N;N;\$!ba;s/\[all\]\ntryboot_a_b=1\nboot_partition=[0-9]*/\[all\]\ntryboot_a_b=1\nboot_partition=${BOOTNAME}/g" ${AUTOBOOT_TXT}
+    mount -o ro,remount ${AUTOBOOT_PARTITION}
+
+    return 0
+  fi
+
+  return 0
+}
+
+opt="$1";
+case "$opt" in
+    "get-primary" ) get-primary $@ ;;
+    "set-primary" ) set-primary $@ ;;
+    "get-state" ) get-state $@ ;;
+    "set-state" ) set-state $@ ;;
+    *) echo >&2 "Invalid option: args: $@ :end"; exit 1;;
+esac

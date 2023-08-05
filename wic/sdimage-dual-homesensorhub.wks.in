@@ -1,5 +1,10 @@
-part /boot --size 100M --source bootimg-partition --ondisk mmcblk0 --fstype=vfat --label boot --active --align 4096
-part /     --size 512M --source rootfs            --ondisk mmcblk0 --fstype=ext4 --label rootfs_A --align 4096
-part /     --size 512M --source rootfs            --ondisk mmcblk0 --fstype=ext4 --label rootfs_B --align 4096
-part /data --size 100M                            --ondisk mmcblk0 --fstype=ext4 --label data --align 4096
-part /home --size 100M --source rootfs --rootfs-dir=${IMAGE_ROOTFS}/home --ondisk mmcblk0 --fstype=ext4 --label homefs --align 1024 --fsoptions "x-systemd.growfs"
+part /autoboot --fixed-size 128M --source bootimg-partition --ondisk mmcblk0 --fstype=vfat --label autoboot --active --align 4096
+
+part /boot --fixed-size ${BOOT_PART_SIZE_MB}M --source bootimg-partition --ondisk mmcblk0 --fstype=vfat --label boot_A   --align 4096
+part       --fixed-size ${BOOT_PART_SIZE_MB}M                            --ondisk mmcblk0 --fstype=vfat --label boot_B   --align 4096
+
+part / --fixed-size ${ROOTFS_PART_SIZE_MB}M --source rootfs --ondisk mmcblk0 --fstype=ext4 --label rootfs_A --align 4096
+part   --fixed-size ${ROOTFS_PART_SIZE_MB}M                 --ondisk mmcblk0 --fstype=ext4 --label rootfs_B --align 4096
+
+part /data --fixed-size 100M                            --ondisk mmcblk0 --fstype=ext4 --label data     --align 4096
+part /home --fixed-size 100M --source rootfs --rootfs-dir=${IMAGE_ROOTFS}/home --ondisk mmcblk0 --fstype=ext4 --label homefs --align 4096 --fsoptions "x-systemd.growfs"

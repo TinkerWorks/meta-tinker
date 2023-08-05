@@ -1,0 +1,1 @@
+RAUC_BUNDLE_COMPATIBLE = "HomeSensorHub"

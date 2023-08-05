@@ -1,9 +1,13 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
-SRC_URI:append := " file://system.conf"
+SRC_URI:append := " \
+    file://system.conf \
+    file://rpi_autoboot \
+    file://rauc-grow-data-partition.service \
+"
 
+RDEPENDS:${PN}:append = " bash "
 
-#do_install:prepend() {
-#    sed -i -e 's\%%MACHINE%%\${RAUC_BUNDLE_COMPATIBLE}\' ${WORKDIR}/system.conf
-#    echo ${RAUC_BUNDLE_COMPATIBLE}
-#    asdasasdasd
-#}
+do_install:append() {
+    install -d ${D}/etc/rauc/
+    install -m 0755 ${WORKDIR}/rpi_autoboot ${D}/etc/rauc/
+}
