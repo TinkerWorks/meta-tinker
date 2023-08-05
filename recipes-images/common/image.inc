@@ -35,5 +35,6 @@ rauc_fix_system_conf() {
     sed -i -e 's/compatible=.*/compatible=${RAUC_BUNDLE_COMPATIBLE}/' ${IMAGE_ROOTFS}/etc/rauc/system.conf
     cat ${IMAGE_ROOTFS}/etc/rauc/system.conf
 }
-
 IMAGE_PREPROCESS_COMMAND:append = " rauc_fix_system_conf "
+
+IMAGE_INSTALL:append = "${@ 'rpi-eeprom' if 'raspberrypi4' in d.getVar('MACHINE') else ''}"
