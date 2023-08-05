@@ -1,0 +1,23 @@
+#!/bin/sh
+
+CMD="chromium \
+   haas.tinker.haus \
+   --start-fullscreen \
+   --kiosk --noerrdialogs \
+   --disable-translate \
+   --no-first-run \
+   --fast \
+   --fast-start \
+   --disable-infobars \
+   --disable-features=TranslateUI \
+   --enable-features=OverlayScrollbar \
+   --disk-cache-dir=/tmp/chromium-cache \
+   --password-store=basic"
+
+pkill chromium
+rm -rf /home/panel/.config/chromium/Singleton*
+
+su -l -c "${CMD}" panel &
+
+# We need to also launch a WM, or Chromium will be unhappy.
+exec matchbox-window-manager
