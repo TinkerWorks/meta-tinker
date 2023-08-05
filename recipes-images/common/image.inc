@@ -1,3 +1,7 @@
+inherit extrausers
+
+EXTRA_USERS_PARAMS = " usermod -p '\$6\$12345\$ZdjGZGawRXJ/ooUhTdJZWGh5SyAuO/.Q2TQpYmmoFHncOMR4TdDd8jGQVtbhL4Jk10.UXTc2fvKW.LjY6CHdI/' root; "
+
 IMAGE_INSTALL:append = " rauc "
 IMAGE_INSTALL:append = " rauc-grow-data-part "
 
@@ -17,8 +21,6 @@ IMAGE_FEATURES:remove = " splash "
 IMAGE_FEATURES:remove = " psplash "
 
 IMAGE_FEATURES:append = "read-only-rootfs"
-
-EXTRA_IMAGE_FEATURES:append = " debug-tweaks "
 
 IMAGE_INSTALL:append = " watchdog "
 RPI_EXTRA_CONFIG = ' \n \
