@@ -5,8 +5,7 @@ SRC_URI:append := " \
 
 do_install:append() {
     install -d ${D}/data
-    mv ${D}${sysconfdir}/hostname ${D}/data/hostname
-    ln -sf /data/hostname ${D}${sysconfdir}/hostname
+     ln -sf /data/hostname ${D}${sysconfdir}/hostname
 
     install -d ${D}/autoboot
 }
