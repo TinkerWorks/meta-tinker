@@ -6,6 +6,7 @@ SRC_URI:append := " \
 "
 
 RDEPENDS:${PN}:append = " bash "
+RDEPENDS:${PN}:remove = " u-boot-fw-utils u-boot-env "
 
 do_install:append() {
     install -d ${D}/etc/rauc/
