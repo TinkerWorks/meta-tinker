@@ -9,6 +9,8 @@ IMAGE_INSTALL:append = " networkmanager "
 
 IMAGE_INSTALL:append = " python3 "
 
+IMAGE_INSTALL:append = " memtester "
+
 IMAGE_INSTALL:append = " rsync "
 IMAGE_INSTALL:append = " htop atop vnstat "
 IMAGE_INSTALL:append = " iperf3 "
