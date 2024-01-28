@@ -1,7 +1,7 @@
 #!/bin/sh
 
 CMD="chromium \
-   haas.tinker.haus \
+   https://homeassistant.tinker.haus \
    --start-fullscreen \
    --kiosk --noerrdialogs \
    --disable-translate \
