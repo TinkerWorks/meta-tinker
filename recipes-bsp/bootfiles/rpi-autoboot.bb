@@ -11,7 +11,7 @@ SRC_URI:append := " file://autoboot.txt"
 
 do_deploy() {
     install -d "${DEPLOYDIR}/${BOOTFILES_DIR_NAME}"
-    install -m 0644 "${WORKDIR}/autoboot.txt" "${DEPLOYDIR}/${BOOTFILES_DIR_NAME}"
+    install -m 0644 "${UNPACKDIR}/autoboot.txt" "${DEPLOYDIR}/${BOOTFILES_DIR_NAME}"
 }
 
 addtask deploy before do_build after do_install

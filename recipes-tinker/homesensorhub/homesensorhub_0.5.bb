@@ -23,7 +23,7 @@ inherit python_setuptools_build_meta systemd
 do_install:append() {
     if ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'true', 'false', d)}; then
     	install -d ${D}${systemd_system_unitdir}/
-        install -m 0644 ${WORKDIR}/homesensorhub.service ${D}${systemd_system_unitdir}/
+        install -m 0644 ${UNPACKDIR}/homesensorhub.service ${D}${systemd_system_unitdir}/
     fi
 }
 

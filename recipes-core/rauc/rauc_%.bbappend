@@ -10,5 +10,5 @@ RDEPENDS:${PN}:remove = " u-boot-fw-utils u-boot-env "
 
 do_install:append() {
     install -d ${D}/etc/rauc/
-    install -m 0755 ${WORKDIR}/rpi_autoboot ${D}/etc/rauc/
+    install -m 0755 ${UNPACKDIR}/rpi_autoboot ${D}/etc/rauc/
 }
