@@ -32,21 +32,13 @@ fakeroot python do_populate_mountpoints() {
         shutil.rmtree(rootfsdir)
 
     copytree(basedir, rootfsdir)
-    for m in ['boot']:
-        full_path = os.path.join(rootfsdir, m)
-        for entry in os.listdir(full_path):
-            full_entry = os.path.join(full_path, entry)
-            if os.path.isdir(full_entry) and not os.path.islink(full_entry):
-                shutil.rmtree(full_entry)
-            else:
-                os.remove(full_entry)
 
     check_size_limits(d)
 }
 
 IMAGE_CMD:root() {
 	dd if=/dev/zero of="${WORKDIR}/root.ext4" count=0 bs=1M seek=${ROOTFS_PART_SIZE_MB}
-	mkfs.ext4 -F -i 4096 "${WORKDIR}/root.ext4" -d "${WORKDIR}/root" -L root
+	mkfs.ext4 -F -i 4096 "${WORKDIR}/root.ext4" -d "${WORKDIR}/rootfs" -L root
 	install -m 0644 "${WORKDIR}/root.ext4" "${IMGDEPLOYDIR}/${IMAGE_NAME}.root.ext4"
 	ln -sfn "${IMAGE_NAME}.root.ext4" "${IMGDEPLOYDIR}/${IMAGE_BASENAME}-${MACHINE}.root.ext4"
 }
