@@ -24,7 +24,6 @@ IMAGE_FEATURES:remove = " psplash "
 
 IMAGE_FEATURES:append = "read-only-rootfs"
 
-IMAGE_INSTALL:append = " watchdog "
 RPI_EXTRA_CONFIG = ' \n \
     # Raspberry Pi Watchdog \n \
     dtparam=watchdog=on \n \
