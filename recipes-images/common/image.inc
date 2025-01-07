@@ -14,7 +14,7 @@ IMAGE_INSTALL:append = " memtester "
 IMAGE_INSTALL:append = " rsync "
 IMAGE_INSTALL:append = " htop atop vnstat "
 IMAGE_INSTALL:append = " iperf3 "
-IMAGE_INSTALL:append = " util-linux-lsblk "
+IMAGE_INSTALL:append = " util-linux util-linux-lsblk "
 IMAGE_INSTALL:append = " i2c-tools "
 
 IMAGE_FEATURES:append = " ssh-server-openssh "
