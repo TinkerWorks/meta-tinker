@@ -1,10 +1,12 @@
 [Unit]
-Description=Home Sensor Hub
+Description=Tinker Sensors
 After=NetworkManager-wait-online.service
 
 [Service]
-ExecStart=/usr/bin/homesensorhub
+ExecStart=/usr/bin/tinkersensors
 Restart=always
+User=root
+Group=root
 
 [Install]
 WantedBy=multi-user.target boot-complete.target

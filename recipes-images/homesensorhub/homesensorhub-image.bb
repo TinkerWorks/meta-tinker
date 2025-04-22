@@ -4,7 +4,7 @@ require name.inc
 
 require ../common/image.inc
 
-IMAGE_INSTALL:append = " homesensorhub "
+IMAGE_INSTALL:append = " tinkersensors "
 
 IMAGE_INSTALL:append = " alsa-utils "
 IMAGE_INSTALL:append = " git "
